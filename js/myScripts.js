@@ -1,23 +1,47 @@
-//Create a var called repository and assign it to be an array.
-// Add several objects to the array. Add three keys and make up a value for each.
-//Create a for loop and  make it forEach( for each item of the repository).
-//Use document.write() inside the loop's code to write  on the website's DOM.
-//Adding strings, write the dog's height next to its name.
-/* Within a loop, add a conditional that checks if the height is above a certain vakue.
-If it is, add the note "Wow, this dog is big!" to the output. Only one dog should have this label.*/
-//if the dog is not special regarding height, the function should return something falsy.
-
-
-var dogRepository = [
-    { name: "Baxter", height: 16, color: "Brown", breed: "Basenji" },
-    { name: "Pokemon", height: 26, color: "Black", breed: "Doberman" },
-    { name: "Lucy", height: 10, color: "Grey", breed: "Maltese" }
+/*var dogRepository = [
+   {name:"Baxter", height:16, color:"Brown", breed:"Basenji"},
+   {name:"Pokemon", height:26, color:"Black", breed:"Doberman"},
+   {name:"Lucy", height:10, color:"Grey", breed:"Maltese"}
 ]
+
+
+
+Inside that IIFE, before anything else, create a NEW dogRepository VARIABLE to hold what your IIFE will return. 
+Assign the IIFE to dogRepository.
+Move the repository variable and the entire array assigned to it inside the IIFE assigned to dogRepository.
+The IIFE should return an object with the following public functions assigned as keys:
+        getAll: return all items. (dogRepository.getAll(); should return an array of dogs.)
+        add: add a single item. (dogRepository.add(item); should add the item (technically, a dog).)
+        Make sure both functions are defined separately with the function keyword and that the return keyword returns only an object with the same names for keys as values.*/
+
+
+var dogRepository = (function() {
+    var newdogRepository = [
+        { name: "Baxter", height: 16, color: "Brown", breed: "Basenji" },
+        { name: "Pokemon", height: 26, color: "Black", breed: "Doberman" },
+        { name: "Lucy", height: 10, color: "Grey", breed: "Maltese" }
+    ];
+    return {
+        getAll: function() {
+            return newdogRepository;
+        },
+        add: function(item) {
+            newdogRepository.push({ name: item.name, height: item.height, color: item.color, breed: item.breed });
+        }
+    };
+})();
+
+
+/* Outside of and below the IIFE, you should already have a forEach() loop that iterates over each dog in the repository; however, since you’ve limited access to the repository array that’s inside the IIFE (so that it’s only accessible through one of the two functions returned by the IIFE), you need to UPDATE the loop code to cope with the new changes. Essentially, you need to use one of the two functions returned by the IIFE in order to retrieve the repository array.*/
 
 document.write('<h1>' + document.title + '</h1>');
 document.write('<BR>');
-dogRepository.forEach(dog => {
+//test add item
+var item = { name: "newDog", height: "", color: "newColor", breed: "newBreed" };
+dogRepository.add(item);
+var dogs = dogRepository.getAll();
 
+for (var dog of dogs) {
     document.write('<h2><a href="">' + dog.name + ' (height:' + dog.height + ')</a></h2>');
     document.write('<p class="p_small">Type: ');
     document.write(' <span class="p__small" style="color:rgb(255, 69, 0);">' + dog.color + ', ' + dog.breed);
@@ -27,4 +51,4 @@ dogRepository.forEach(dog => {
 
     document.write('</p>');
     document.write('<BR><BR>');
-})
+}
